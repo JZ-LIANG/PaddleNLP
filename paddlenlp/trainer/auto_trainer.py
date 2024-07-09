@@ -49,6 +49,7 @@ except:
 MODEL_NAME = "model"
 OPTIMIZER_NAME = "optimizer"
 DIST_CKPT_PATH = "dist_ckpt"
+PRINT_PROGRAM = True
 
 
 class AutoTrainer(Trainer):
@@ -395,7 +396,7 @@ class AutoTrainer(Trainer):
 
         return paddle.io.BatchSampler(
             dataset=self.train_dataset,
-            shuffle=True,
+            shuffle=False,
             batch_size=total_batch_size,
             drop_last=self.args.dataloader_drop_last,
         )
@@ -469,6 +470,11 @@ class AutoTrainer(Trainer):
     def static_traning(self, model: nn.Layer, inputs: Dict[str, Union[paddle.Tensor, Any]]) -> paddle.Tensor:
         input_ids, labels = tuple(inputs.values())
         loss = model(input_ids, labels)
+        global PRINT_PROGRAM
+        if PRINT_PROGRAM:
+            with open("./program_pp2.txt.{}".format(paddle.distributed.get_rank()), "w") as f:
+                f.write(str(model._engine.main_program))
+            PRINT_PROGRAM = False
 
         if loss is not None and self.args.gradient_accumulation_steps > 1:
             loss = loss / self.args.gradient_accumulation_steps

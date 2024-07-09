@@ -168,7 +168,6 @@ def scaled_dot_product_attention(
         # we just make it triangle_upper_mask
         if attention_mask is None:
             attention_mask = get_triangle_upper_mask(attn_weights)
-
         attention_mask = attention_mask.reshape([bsz, 1, q_len, kv_seq_len])
         if list(attention_mask.shape) != [bsz, 1, q_len, kv_seq_len]:
             raise ValueError(
