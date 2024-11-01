@@ -545,10 +545,10 @@ function llama_dy2st_auto_bs4_bf16_DP1-MP1-PP4-SD2-VPP3_split_bw() {
         ips=`cat $case_log_dir/workerlog.0 | grep 'global_step: 30' | awk -F 'interval_tokens_per_second_per_device: ' '{print $2}' | awk -F ',' '{print $1}'`
         mem=`cat $case_log_dir/workerlog.0 | grep 'global_step: 30' | awk -F 'max_memory_reserved: ' '{print $2}' | awk -F ',' '{print $1}'`
         echo "result: loss=$loss ips=$ips mem=$mem"
-        loss_base=-1 # record new data
+        loss_base=7.54158936 # record new data
         ips_base=-1
         mem_base=-1
-        # check_result $FUNCNAME ${loss_base} ${loss} ${ips_base} ${ips} ${mem_base} ${mem} @卢畅
+        check_result $FUNCNAME ${loss_base} ${loss} ${ips_base} ${ips} ${mem_base} ${mem}
         echo "=========== $FUNCNAME run  end ==========="  
     fi
 }
