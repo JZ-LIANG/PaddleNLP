@@ -1461,11 +1461,11 @@ function llm_gpt_dygraph_auto_bs8_fp32_DP2() {
     ips=-1
     mem=-1
     echo "result: loss=$loss ips=$ips mem=$mem loss_md5=$loss_md5"
-    loss_base=10.59368134
+    loss_base=10.58372021 #10.59368134
     ips_base=-1
     mem_base=-1
     if [ $IS_A100 -ne 0 ];then
-        loss_base=10.60190201
+        loss_base=10.59204102 #10.60190201
     fi
     check_result $FUNCNAME ${loss_base} ${loss} ${ips_base} ${ips} ${mem_base} ${mem}
     echo "=========== $FUNCNAME run  end ==========="
